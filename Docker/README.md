@@ -16,8 +16,7 @@ docker ps
 ```
 
 <p>Para visualizar todas las imagenes creadas (activas / muertas): </p>
-<small>
-** Las imágenes de Docker son esencialmente una instantánea de un contenedor. Las imágenes se crean con el comando build
+<small> Las imágenes de Docker son esencialmente una instantánea de un contenedor. Las imágenes se crean con el comando build
 </small>
 
 ```bash
@@ -73,7 +72,7 @@ apt-get install curl
 curl localhost
 ```
 
-<h3>Volúmenes</p>
+<h3>Volúmenes</h3>
 <p>En Informática, se considera volumen el área de almacenamiento de un disco duro o de una de sus particiones, accesible mediante un formato consistente en un sistema de archivos.</p>
 
 <p>En pocas palabras lo que vamos a hacer ahora es crear un volumen dentro de la imagen de Nginx que esté vinculado con una carpeta de nuestra PC</p>
