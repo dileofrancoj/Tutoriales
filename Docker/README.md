@@ -106,6 +106,49 @@ docker run -v ~/Desktop/myWeb/index.html:/usr/share/nginx/html/index.html:ro -p 
 # con esto lo que logramos es desde nuestro puerto 8080 (host) apuntar al puerto 80 del contenedor. Por lo que si abrimos nuestro localhost:8080 veremos nuestra web desde el web server nginx del contenedor.
 ```
 
+<p>En caso que sea un build propio de un proyecto (React xej)</p>
+
+```bash
+docker run -v ~/Desktop/PUNCHIT/REACT/clase001/build/:/usr/share/nginx/html:ro -p 8080:80 -d nginx:1.19.6
+```
+
+<hr>
+<h3>Ejemplo de como Dockerizar un proyecto de NodeJS</h4>
+<p>El primer paso es asegurarse de tener express y express-generator instalados en la PC </p>
+
+```bash
+cd Desktop
+express api-rest
+touch Dockerfile
+touch .dockerignore
+```
+
+```bash
+vim Dockerfile
+FROM node:12-alpine #punto de partida de la imagen
+WORKDIR /app # work directory
+COPY package*.json ./ #copiamos package.json y package-lock.json
+RUN npm install #instalamos las dependencias
+RUN npm install forever -g -y #instalamos forever para correr la aplicacion en segundo plano
+COPY . .  #copiamos todo el proyecto al workdirectory
+EXPOSE 30000 #habilitamos el puerto 3000 del contenedor
+CMD forever -c 'node --harmony' ./bin/www #corremos forever
+```
+
+<p>Además, tenemos que tener en cuenta de no copiar los node_modules. Para eso, lo agregamos al .dockerignore
+
+```bash
+vim .dockerignore
+node_modules
+```
+
+```bash
+docker build -t [nombre-del-tag] . #folder . (local)
+docker images # tendría que aparecer la imagen creada
+docker run -p 4000:3000 -d [ID-imagen || nombre-del-tag] #-d para que corra en background. 4000 puerto de entrada del host y apunta al 3000 del contenedor
+```
+
+<p>Be happy 🤓</p>
 <hr>
 
 <h4>Aclaración 🎤 </h4>
@@ -113,6 +156,6 @@ docker run -v ~/Desktop/myWeb/index.html:/usr/share/nginx/html/index.html:ro -p 
 
 <p> Esto no pretende ser una guia de Docker escrita por mi si no que es material que uso de consulta</p>
 
-<p>PD: Si ves algun error conceptual o encontras un error de ortografía, podes avisarme o hacer una pull request :D </p>
+<p>PD: Si ves algun error conceptual o encontrás un error de ortografía, podes avisarme o hacer una pull request :D </p>
 
 <h4>Autor: Franco Di Leo 🤓</h4>
